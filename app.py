@@ -7,6 +7,7 @@ from src.validator import CADValidator
 app = Flask(__name__)
 
 UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 @app.route("/")
@@ -60,5 +61,8 @@ def validate_sample(name):
     results["filename"] = f"{name}.step"
     return jsonify(results)
 
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    import os
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
