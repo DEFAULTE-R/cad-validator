@@ -1,1 +1,120 @@
-<h1>CAD Validator Running</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CAD Validator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      margin: 0;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    input, button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background: #6366f1;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #4f46e5;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #020617;
+      border-radius: 10px;
+      white-space: pre-wrap;
+    }
+
+    .status-pass { color: #22c55e; }
+    .status-fail { color: #ef4444; }
+  </style>
+</head>
+
+<body>
+  <h1>🚀 CAD Validator</h1>
+
+  <div class="container">
+    <input type="file" id="fileInput" accept=".step,.stp" />
+
+    <button onclick="uploadFile()">Validate STEP File</button>
+
+    <div id="status"></div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    async function uploadFile() {
+      const fileInput = document.getElementById("fileInput");
+      const status = document.getElementById("status");
+      const resultDiv = document.getElementById("result");
+
+      if (!fileInput.files.length) {
+        alert("Please select a STEP file");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      status.innerHTML = "⏳ Analyzing...";
+      resultDiv.innerHTML = "";
+
+      try {
+        const res = await fetch("/api/validate", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+          status.innerHTML = "❌ Error";
+          resultDiv.innerHTML = data.error;
+          return;
+        }
+
+        if (data.critical > 0) {
+          status.innerHTML = '<span class="status-fail">❌ FAIL</span>';
+        } else {
+          status.innerHTML = '<span class="status-pass">✅ PASS</span>';
+        }
+
+        resultDiv.innerHTML = JSON.stringify(data, null, 2);
+
+      } catch (err) {
+        status.innerHTML = "❌ Request failed";
+        resultDiv.innerHTML = err.toString();
+      }
+    }
+  </script>
+</body>
+</html>
