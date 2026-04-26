@@ -16,24 +16,35 @@ header h1 { font-size:20px; font-weight:600; }
 .upload-zone h2 { font-size:18px; margin-bottom:8px; }
 .upload-zone p { color:#64748b; font-size:14px; }
 #file-input { display:none; }
+.mode-row { display:flex; gap:10px; margin-bottom:20px; align-items:center; }
+.mode-label { font-size:12px; color:#64748b; }
+.mode-select { background:#1a1d2e; border:1px solid #2d3148; color:#e2e8f0; border-radius:8px; padding:7px 12px; font-size:13px; }
 .settings { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:28px; }
 .setting { background:#1a1d2e; border-radius:12px; padding:16px; border:1px solid #2d3148; }
 .setting label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#64748b; display:block; margin-bottom:8px; }
 .setting input { width:100%; background:#0f1117; border:1px solid #2d3148; color:#e2e8f0; border-radius:6px; padding:8px 10px; font-size:14px; }
-.samples { display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap; }
+.samples { display:flex; gap:10px; margin-bottom:28px; flex-wrap:wrap; align-items:center; }
 .sample-btn { padding:8px 16px; border-radius:8px; border:1px solid #2d3148; background:#1a1d2e; color:#94a3b8; font-size:13px; cursor:pointer; }
 .sample-btn:hover { background:#2d3148; color:#e2e8f0; }
 .validate-btn { width:100%; padding:14px; border-radius:12px; border:none; background:#6366f1; color:white; font-size:16px; font-weight:600; cursor:pointer; margin-bottom:28px; }
 .validate-btn:hover { background:#4f46e5; }
 .validate-btn:disabled { background:#2d3148; color:#475569; cursor:not-allowed; }
 .results { display:none; }
-.summary { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+.summary-block { background:#1a1d2e; border-radius:12px; border:1px solid #2d3148; padding:20px; margin-bottom:20px; }
+.summary-block h3 { font-size:13px; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:12px; }
+.summary-line { font-size:14px; color:#e2e8f0; margin-bottom:6px; padding-left:12px; border-left:2px solid #6366f1; }
+.meta-row { display:flex; gap:16px; margin-top:14px; flex-wrap:wrap; }
+.meta-item { font-size:12px; color:#64748b; }
+.meta-item span { color:#818cf8; font-weight:600; }
+.stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
 .stat { background:#1a1d2e; border-radius:12px; padding:18px; border:1px solid #2d3148; text-align:center; }
 .stat label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#64748b; display:block; margin-bottom:6px; }
-.stat .val { font-size:32px; font-weight:700; }
-.indigo{color:#818cf8;} .red{color:#ef4444;} .yellow{color:#eab308;} .green{color:#22c55e;}
-.issues-wrap { background:#1a1d2e; border-radius:12px; border:1px solid #2d3148; overflow:hidden; }
-.issues-header { padding:16px 20px; border-bottom:1px solid #2d3148; font-weight:600; font-size:14px; }
+.stat .val { font-size:28px; font-weight:700; }
+.indigo{color:#818cf8;} .red{color:#ef4444;} .yellow{color:#eab308;} .green{color:#22c55e;} .orange{color:#f97316;}
+.issues-wrap { background:#1a1d2e; border-radius:12px; border:1px solid #2d3148; overflow:hidden; margin-bottom:16px; }
+.issues-header { padding:16px 20px; border-bottom:1px solid #2d3148; font-weight:600; font-size:14px; display:flex; justify-content:space-between; align-items:center; }
+.copy-btn { font-size:12px; padding:5px 12px; border-radius:6px; border:1px solid #2d3148; background:transparent; color:#94a3b8; cursor:pointer; }
+.copy-btn:hover { background:#2d3148; }
 .issue { padding:16px 20px; border-bottom:1px solid #1e2235; }
 .issue:last-child { border-bottom:none; }
 .issue:hover { background:#1e2235; }
@@ -41,13 +52,15 @@ header h1 { font-size:20px; font-weight:600; }
 .badge { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; text-transform:uppercase; }
 .badge.critical { background:#7f1d1d; color:#ef4444; }
 .badge.warning { background:#713f12; color:#eab308; }
+.count-badge { background:#1e2235; border-radius:20px; padding:2px 8px; font-size:11px; color:#64748b; }
 .issue-type { font-size:14px; font-weight:500; }
-.issue-detail { font-size:12px; color:#64748b; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:4px; }
-.issue-fix { margin-top:8px; font-size:12px; color:#818cf8; }
+.issue-detail { font-size:12px; color:#64748b; margin-bottom:6px; }
+.issue-fix { font-size:12px; color:#818cf8; line-height:1.5; }
 .no-issues { padding:40px; text-align:center; color:#22c55e; font-size:16px; }
-.spinner { display:none; text-align:center; padding:40px; color:#64748b; }
+.spinner { display:none; text-align:center; padding:40px; color:#64748b; font-size:14px; }
 .error-box { background:#7f1d1d; border-radius:12px; padding:16px 20px; color:#ef4444; margin-bottom:20px; display:none; }
 .filename-tag { background:#1e2235; border-radius:6px; padding:4px 10px; font-size:12px; color:#818cf8; }
+.wip-note { font-size:11px; color:#475569; margin-left:8px; }
 </style>
 </head>
 <body>
@@ -57,6 +70,7 @@ header h1 { font-size:20px; font-weight:600; }
   <span class="sub">Catches manufacturability issues before they hit the lab</span>
 </header>
 <div class="container">
+
   <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
     <div class="icon">📐</div>
     <h2>Drop your STEP file here</h2>
@@ -64,45 +78,86 @@ header h1 { font-size:20px; font-weight:600; }
     <div id="selected-file" style="margin-top:12px"></div>
   </div>
   <input type="file" id="file-input" accept=".step,.stp">
+
+  <div class="mode-row">
+    <span class="mode-label">Manufacturing mode:</span>
+    <select class="mode-select" id="mode">
+      <option value="3dp">3D Printing</option>
+      <option value="cnc" disabled>CNC Milling (coming soon)</option>
+      <option value="injection" disabled>Injection Molding (coming soon)</option>
+    </select>
+  </div>
+
   <div class="settings">
     <div class="setting"><label>Min Wall Thickness (mm)</label><input type="number" id="min-wall" value="2.0" step="0.1" min="0.1"></div>
-    <div class="setting"><label>Max Overhang Angle (deg)</label><input type="number" id="max-overhang" value="45" step="1" min="1" max="89"></div>
+    <div class="setting"><label>Max Overhang Angle (°)</label><input type="number" id="max-overhang" value="45" step="1" min="1" max="89"></div>
     <div class="setting"><label>Min Edge Radius (mm)</label><input type="number" id="min-radius" value="1.0" step="0.1" min="0.1"></div>
   </div>
-  <div style="margin-bottom:12px;font-size:12px;color:#64748b">Or try a sample file:</div>
+
+  <div style="margin-bottom:10px;font-size:12px;color:#64748b;">Try a sample file:</div>
   <div class="samples">
     <button class="sample-btn" onclick="runSample('thin_wall')">🧱 Thin Wall</button>
     <button class="sample-btn" onclick="runSample('overhang')">📐 Overhang</button>
     <button class="sample-btn" onclick="runSample('clean_part')">✅ Clean Part</button>
+    <span class="wip-note">Active: overhang detection &nbsp;·&nbsp; Thin wall & sharp edge: WIP</span>
   </div>
+
   <button class="validate-btn" id="validate-btn" onclick="runValidation()">🔍 Validate STEP File</button>
+
   <div class="error-box" id="error-box"></div>
-  <div class="spinner" id="spinner">⏳ Analysing geometry... this may take 10-20 seconds</div>
+  <div class="spinner" id="spinner">⏳ Analysing geometry… this may take 10–20 seconds</div>
+
   <div class="results" id="results">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
       <span style="font-size:14px;color:#64748b">Results for</span>
       <span class="filename-tag" id="result-filename"></span>
     </div>
-    <div class="summary">
+
+    <!-- Summary -->
+    <div class="summary-block">
+      <h3>Analysis Summary</h3>
+      <div id="summary-lines"></div>
+      <div class="meta-row">
+        <div class="meta-item">⚡ Completed in <span id="r-time">—</span>s</div>
+        <div class="meta-item">🎯 Confidence: <span id="r-confidence">—</span>%</div>
+        <div class="meta-item">⚠️ Risk level: <span id="r-risk">—</span></div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-grid">
       <div class="stat"><label>Total Issues</label><div class="val indigo" id="r-total">0</div></div>
       <div class="stat"><label>Critical</label><div class="val red" id="r-critical">0</div></div>
       <div class="stat"><label>Warnings</label><div class="val yellow" id="r-warnings">0</div></div>
-      <div class="stat"><label>Status</label><div class="val green" id="r-status">-</div></div>
+      <div class="stat"><label>Status</label><div class="val" id="r-status">—</div></div>
     </div>
+
+    <!-- Issues -->
     <div class="issues-wrap">
-      <div class="issues-header">🔍 Issues Found</div>
+      <div class="issues-header">
+        🔍 Issues Found
+        <button class="copy-btn" onclick="copyReport()">📋 Copy JSON Report</button>
+      </div>
       <div id="issues-list"></div>
     </div>
   </div>
+
 </div>
 <script>
 let selectedFile = null;
+let lastResults = null;
+
 const dropZone = document.getElementById('drop-zone');
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor='#6366f1'; });
 dropZone.addEventListener('dragleave', () => dropZone.style.borderColor='');
-dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor=''; const f = e.dataTransfer.files[0]; if(f) setFile(f); });
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor=''; const f=e.dataTransfer.files[0]; if(f) setFile(f); });
 document.getElementById('file-input').addEventListener('change', e => { if(e.target.files[0]) setFile(e.target.files[0]); });
-function setFile(f) { selectedFile = f; document.getElementById('selected-file').innerHTML = '<span class="filename-tag">📄 '+f.name+'</span>'; }
+
+function setFile(f) {
+  selectedFile = f;
+  document.getElementById('selected-file').innerHTML = '<span class="filename-tag">📄 '+f.name+'</span>';
+}
+
 async function runValidation() {
   if(!selectedFile) { showError("Please select a STEP file first."); return; }
   const form = new FormData();
@@ -111,36 +166,85 @@ async function runValidation() {
   form.append("max_overhang", document.getElementById('max-overhang').value);
   form.append("min_radius", document.getElementById('min-radius').value);
   setLoading(true);
-  try { const res = await fetch('/api/validate', {method:'POST',body:form}); const data = await res.json(); if(data.error){showError(data.error);return;} showResults(data); }
-  catch(e) { showError("Server error: "+e.message); }
+  try {
+    const res = await fetch('/api/validate', {method:'POST', body:form});
+    const data = await res.json();
+    if(data.error) { showError(data.error); return; }
+    showResults(data);
+  } catch(e) { showError("Server error: "+e.message); }
   finally { setLoading(false); }
 }
+
 async function runSample(name) {
   setLoading(true);
-  try { const res = await fetch('/api/sample/'+name); const data = await res.json(); if(data.error){showError(data.error);return;} showResults(data); }
-  catch(e) { showError("Server error: "+e.message); }
+  try {
+    const res = await fetch('/api/sample/'+name);
+    const data = await res.json();
+    if(data.error) { showError(data.error); return; }
+    showResults(data);
+  } catch(e) { showError("Server error: "+e.message); }
   finally { setLoading(false); }
 }
+
 function showResults(data) {
   hideError();
+  lastResults = data;
+
   document.getElementById('result-filename').textContent = data.filename || data.file;
   document.getElementById('r-total').textContent = data.total_issues;
   document.getElementById('r-critical').textContent = data.critical;
   document.getElementById('r-warnings').textContent = data.warnings;
+  document.getElementById('r-time').textContent = data.analysis_time_sec || '—';
+  document.getElementById('r-confidence').textContent = data.confidence ? Math.round(data.confidence*100) : '—';
+
+  const risk = data.risk_level || '—';
+  const riskEl = document.getElementById('r-risk');
+  riskEl.textContent = risk;
+  riskEl.style.color = risk==='HIGH'?'#ef4444': risk==='MEDIUM'?'#f97316':'#22c55e';
+
   const s = document.getElementById('r-status');
-  if(data.total_issues===0){s.textContent='Pass';s.className='val green';}
-  else if(data.critical>0){s.textContent='Fail';s.className='val red';}
-  else{s.textContent='Warn';s.className='val yellow';}
+  if(data.status==='FAIL') { s.textContent='❌ FAIL'; s.className='val red'; }
+  else if(data.status==='REVIEW') { s.textContent='⚠️ REVIEW'; s.className='val orange'; }
+  else { s.textContent='✅ PASS'; s.className='val green'; }
+
+  const sumLines = document.getElementById('summary-lines');
+  sumLines.innerHTML = (data.summary||[]).map(l => '<div class="summary-line">'+l+'</div>').join('');
+
   const list = document.getElementById('issues-list');
-  if(!data.issues||data.issues.length===0){ list.innerHTML='<div class="no-issues">No manufacturability issues found!</div>'; }
-  else { list.innerHTML = data.issues.map(issue => {
-    const extras = Object.entries(issue).filter(([k])=>!['issue_type','severity','location','fix'].includes(k)).map(([k,v])=>'<span>'+k.replace(/_/g,' ')+': <b>'+v+'</b></span>').join('');
-    return '<div class="issue"><div class="issue-top"><span class="badge '+issue.severity+'">'+issue.severity+'</span><span class="issue-type">'+issue.issue_type.replace(/_/g,' ').toUpperCase()+'</span></div><div class="issue-detail"><span>location: <b>'+issue.location+'</b></span>'+extras+'</div><div class="issue-fix">💡 '+issue.fix+'</div></div>';
-  }).join(''); }
+  if(!data.issues||data.issues.length===0) {
+    list.innerHTML='<div class="no-issues">✅ No manufacturability issues found — design cleared for fabrication!</div>';
+  } else {
+    list.innerHTML = data.issues.map(issue => {
+      const countBadge = issue.count > 1 ? '<span class="count-badge">×'+issue.count+' regions</span>' : '';
+      return '<div class="issue">'+
+        '<div class="issue-top">'+
+          '<span class="badge '+issue.severity+'">'+issue.severity+'</span>'+
+          '<span class="issue-type">'+issue.issue_type.replace(/_/g,' ').toUpperCase()+'</span>'+
+          countBadge+
+        '</div>'+
+        '<div class="issue-detail">Primary location: '+issue.location+'</div>'+
+        '<div class="issue-fix">💡 '+issue.fix+'</div>'+
+      '</div>';
+    }).join('');
+  }
   document.getElementById('results').style.display='block';
 }
-function setLoading(on) { document.getElementById('spinner').style.display=on?'block':'none'; document.getElementById('validate-btn').disabled=on; if(on)document.getElementById('results').style.display='none'; }
-function showError(msg) { const b=document.getElementById('error-box'); b.textContent='Error: '+msg; b.style.display='block'; }
+
+function copyReport() {
+  if(!lastResults) return;
+  navigator.clipboard.writeText(JSON.stringify(lastResults, null, 2));
+  const btn = document.querySelector('.copy-btn');
+  btn.textContent = '✅ Copied!';
+  setTimeout(()=>btn.textContent='📋 Copy JSON Report', 2000);
+}
+
+function setLoading(on) {
+  document.getElementById('spinner').style.display = on?'block':'none';
+  document.getElementById('validate-btn').disabled = on;
+  document.getElementById('validate-btn').textContent = on ? '⏳ Analysing...' : '🔍 Validate STEP File';
+  if(on) document.getElementById('results').style.display='none';
+}
+function showError(msg) { const b=document.getElementById('error-box'); b.textContent='❌ '+msg; b.style.display='block'; }
 function hideError() { document.getElementById('error-box').style.display='none'; }
 </script>
 </body>
